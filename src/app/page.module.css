@@ -1,0 +1,26 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem;
+  min-height: 80vh;
+}
+
+.landing{
+    text-align: center;
+}
+
+.landing .head{
+    font-size: 2.5rem;
+    margin: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.btnLarge{
+    font-size: 1.5rem;
+    padding: 0.6em 1.5em;
+    background-color: var(--black-color);
+    color: var(--white-color);
+    cursor: pointer;
+}

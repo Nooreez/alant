@@ -1,0 +1,77 @@
+:root {
+    --max-width: 1200px;
+    --border-radius: 12px;
+    --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+        "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+        "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+
+    --black-color: #000000;
+    --white-color: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html,
+body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/*=============
+  Header
+===============*/
+
+.header{
+    background-color: var(--black-color);
+    color: var(--white-color);
+}
+
+.header-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--max-width);
+    margin: 0 auto;
+
+    padding: 1.25rem 1rem;
+}
+
+.header .logo{
+    font-weight: 600;
+    font-size: 1.75rem;
+}
+
+.header-link{
+    margin: 0.5rem;
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 0, 0, 0);
+    transition: text-decoration-color 300ms;
+}
+
+.header-link:hover{
+    text-decoration-color: rgba(255, 255, 255, 1);
+}
+
+/*=============
+  Footer
+===============*/
+
+.footer{
+    padding: 1.25rem 1rem;
+    text-align: center;
+}
+
+.footer .logo{
+    font-size: 1.25rem;
+    font-weight: 500;
+}

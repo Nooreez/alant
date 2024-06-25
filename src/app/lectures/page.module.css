@@ -1,0 +1,79 @@
+.main{
+    max-width: calc(var(--max-width) - 50px);
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.lectureHeader{
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 500;
+}
+
+.subjectHeader{
+    font-size: 2.25rem;
+    font-weight: 500;
+}
+
+.lectureCard{
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.lectureCard:hover, .lectureCard:active{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    background-color: rgb(236, 236, 236);
+    font-size: 1.15rem;
+}
+
+.lectureMain{
+    display: flex;
+
+    justify-content: space-between;
+}
+
+.transcriptHeader{
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.lectureTranscript{
+    max-width: 700px;
+    font-size: 1.1rem;
+}
+
+/*=============
+  Chat
+===============*/
+
+.chatWrapper{
+    min-width: 350px;
+
+    height: 70vh;
+}
+
+.chatHeader{
+    background-color: var(--black-color);
+    color: var(--white-color);
+
+    padding: 0.75rem 2rem;
+    text-align: center;
+}
+
+.chatBox{
+    background-color: rgb(226, 226, 226);
+    height: 100%;
+}
+
+.submitForm{
+    width: 100%;
+}
+
+.submitForm input{
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
