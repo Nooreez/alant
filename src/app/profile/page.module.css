@@ -1,0 +1,153 @@
+.profileContainer {
+    font-family: var(--font-family);
+    color: var(--dark-blue);
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--dark-blue);
+    color: white;
+  }
+  
+  .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .userInfo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .username {
+    margin-left: 10px;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--gold);
+    padding: 10px 0;
+  }
+  
+  .navLink {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .mainContent {
+    padding: 20px;
+  }
+  
+  .profileHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .profilePictureContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  .profileImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--dark-blue);
+    margin-bottom: 10px;
+  }
+  
+  .generateProfileButton {
+    background-color: var(--dark-blue);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .profileInfoContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profileInfo {
+    font-size: 1.4em;
+  }
+  
+  .profileInfo h1 {
+    margin-left: 50px;
+    text-decoration: underline;
+  }
+  
+  .actionButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 75px;
+  }
+  
+  .editProfileButton, .changePasswordButton {
+    background-color: var(--gold);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .profileDetails {
+    margin-top: 20px;
+    font-size: 1.4em;
+  }
+  
+  .profileDetail {
+    margin-top: 5px;
+  }
+  
+  .courseList {
+    list-style-type: disc;
+    padding: 20px;
+    margin:10px;
+  }
+  /* pages/userList.module.css */
+.userListContainer {
+    font-family: var(--font-family);
+    color: var(--dark-blue);
+  }
+  
+  .mainContent {
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .userTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .userTable th, .userTable td {
+    border: 1px solid var(--dark-blue);
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .profileLink {
+    color: var(--dark-blue);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  

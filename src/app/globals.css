@@ -7,6 +7,18 @@
 
     --black-color: #000000;
     --white-color: #FFFFFF;
+    --dark-blue: #000080;
+    --gold: #D4AF38;
+    --font-family: 'Sans Serif', sans-serif;
+    --bg-light: #F9FAFB; 
+    --bg-dark: #111827;  
+    --text-light: #374151;
+    --text-dark: #FFFFFF; 
+    --border-light: #D1D5DB; 
+    --border-dark: #374151; 
+    --bg-primary: #3B82F6; 
+    --bg-primary-hover: #2563EB;
+    --focus-ring: #BFDBFE;
 }
 
 * {

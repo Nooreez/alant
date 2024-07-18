@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useForm } from "react-hook-form"
+import { useRouter } from 'next/navigation';
 
 type LoginFormsInputs = {
   username: string;
@@ -23,11 +24,16 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<LoginFormsInputs>({ resolver: yupResolver(validation) });
 
+  const router = useRouter();
+
   const login = (user: LoginFormsInputs) => {
     axios.post("http://localhost:8080/login", user)
       .then(response => {
         console.log("Login successful:", response.data);
         localStorage.setItem("token", response.data);
+        localStorage.setItem("username" , user.username)
+        console.log(localStorage.getItem("username"))
+        router.push('/profile/'+user.username)
       })
       .catch(error => {
         console.log(error);
@@ -51,7 +57,7 @@ export default function LoginPage() {
                 type="text"
                 id="username"
                 className={styles.input}
-                placeholder="username"
+                placeholder="Username"
                 {...register("username")}
               />
             </div>

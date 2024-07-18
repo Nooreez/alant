@@ -7,7 +7,11 @@ import (
 )
 
 func AuthRoutes(r *gin.Engine) {
+	//authorization
 	r.POST("/login", controllers.Login)
 	r.POST("/signup", controllers.Signup)
 	r.GET("/logout", controllers.Logout)
+	
+	r.GET("/profile/:username", controllers.Profile)
+    r.GET("/users", controllers.UserList)
 }

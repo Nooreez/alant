@@ -12,7 +12,6 @@ import (
 func main() {
     r := gin.Default()
 
-    // Load environment variables
     err := godotenv.Load()
     if err != nil {
         log.Fatal("Error loading .env file")
@@ -34,6 +33,9 @@ func main() {
 
     // Define routes
     routes.AuthRoutes(r)
+
+
+    r.Static("/uploads", "./uploads")
 
     // Run server
     r.Run(":8080")

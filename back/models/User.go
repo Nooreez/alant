@@ -10,4 +10,7 @@ type User struct {
 	Email    string  `gorm:"unique" json:"email"`
 	Password string  `json:"password"`
 	Role     string  `json:"role"`
+	Institution string `json:"institution"`
+	MediaURL string `json:"media_url"`
+
 }
