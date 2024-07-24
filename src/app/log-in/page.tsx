@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useForm } from "react-hook-form"
 import { useRouter } from 'next/navigation';
+import Header from '../header';
 
 type LoginFormsInputs = {
   username: string;
@@ -45,6 +46,7 @@ export default function LoginPage() {
 
   return (
     <section className={styles.bodySection}>
+      <Header />
       <div className={styles.container}>
         <div className={styles.formContainer}>
           <h1 className={styles.title}>Login to your account</h1>

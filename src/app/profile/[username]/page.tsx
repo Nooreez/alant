@@ -22,11 +22,16 @@ export default function ProfilePage() {
     }
   }, [username]);
 
+  const router = useRouter();
   if (!user) {
-    return <div>Loading...</div>;
+    return null; // Return null to prevent rendering when user data is not yet available
   }
 
   const storedUsername = typeof window !== 'undefined' ? localStorage.getItem("username") : null;
+
+  const handleEditClick = () => {
+    router.push('/edit');
+  };
 
   return (
     <div className={styles.profileContainer}>
@@ -43,17 +48,23 @@ export default function ProfilePage() {
           <div className={styles.profileInfoContainer}>
             <div className={styles.profileInfo}>
               <h1>{user.name} {user.surname}</h1>
+              <p className={styles.profileDetail}><strong>Role:</strong> {user.role}</p>
             </div>
             {storedUsername === username && (
               <div className={styles.actionButtons}>
-                <button className={styles.editProfileButton}>✏️ Edit Profile</button>
+                <button 
+                  className={styles.editProfileButton} 
+                  onClick={handleEditClick}
+                >
+                  ✏️ Edit Profile
+                </button>
                 <button className={styles.changePasswordButton}>🔒 Change Password</button>
               </div>
             )}
           </div>
         </div>
         <div className={styles.profileDetails}>
-          <p className={styles.profileDetail}><strong>Institution:</strong> Real World University</p>
+          <p className={styles.profileDetail}><strong>Institution:</strong> {user.institution}</p>
           <p className={styles.profileDetail}><strong>Courses:</strong></p>
           <ul className={styles.courseList}>
             <li>Linear Algebra MATH-UN 001</li>

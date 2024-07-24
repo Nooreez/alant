@@ -14,4 +14,7 @@ func AuthRoutes(r *gin.Engine) {
 	
 	r.GET("/profile/:username", controllers.Profile)
     r.GET("/users", controllers.UserList)
+
+	r.PUT("/profile/:username", controllers.UpdateProfile)
+
 }

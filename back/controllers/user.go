@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"back/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -56,4 +57,41 @@ func UserList(c *gin.Context) {
         return
     }
     c.JSON(http.StatusOK, gin.H{"success": users})
+}
+
+type UpdateProfileInput struct {
+	Email       string `json:"email" binding:"required"`
+	Name        string `json:"name" binding:"required"`
+	Surname     string `json:"surname" binding:"required"`
+	Role        string `json:"role" binding:"required"`
+	Institution string `json:"institution" binding:"required"`
+}
+
+func UpdateProfile(c *gin.Context) {
+	var input UpdateProfileInput
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	username := c.Param("username")
+	var user models.User
+	result := models.DB.Where("username = ?", username).First(&user)
+	if result.Error != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+
+	user.Name = input.Name
+	user.Surname = input.Surname
+	user.Email = input.Email
+	user.Role = input.Role
+	user.Institution = input.Institution
+
+	fmt.Println(input.Name)
+	fmt.Println(input.Surname)
+
+	models.DB.Save(&user)
+
+	c.JSON(http.StatusOK, gin.H{"success": "Profile updated successfully", "user": user})
 }

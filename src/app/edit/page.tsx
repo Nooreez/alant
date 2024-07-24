@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import styles from "./page.module.css";
+import styles from "../sign-in/page.module.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
@@ -10,15 +10,14 @@ import Header from '../header';
 
 type Props = {};
 
-type RegisterFormsInputs = {
+type EditProfileInputs = {
   email: string;
   name: string;
   surname: string;
   username: string;
-  password: string;
   role: string;
   institution: string;
-  profile_image: FileList; 
+  profile_image: File | null; 
 };
 
 const validation = Yup.object().shape({
@@ -26,47 +25,77 @@ const validation = Yup.object().shape({
   username: Yup.string().required("Username is required"),
   name: Yup.string().required("Name is required"),
   surname: Yup.string().required("Surname is required"),
-  password: Yup.string().required("Password is required"),
   role: Yup.string().required("Role is required"),
   institution: Yup.string().required("Institution is required"), 
-  profile_image: Yup.mixed().required("Profile image is required"),
+  profile_image: Yup.mixed().notRequired(), // Profile image is optional for updates
 });
 
-export default function RegisterPage() {
+export default function EditProfilePage() {
+  const username = localStorage.getItem("username");
+  const [initialData, setInitialData] = useState<EditProfileInputs>({
+    email: '',
+    name: '',
+    surname: '',
+    username: '',
+    role: '',
+    institution: '',
+    profile_image: null,
+  });
+  const router = useRouter();
+  if (!username) {
+    router.push('/');
+  }
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<RegisterFormsInputs>({ resolver: yupResolver(validation) });
-  
-  const router = useRouter();
+  } = useForm<EditProfileInputs>({ resolver: yupResolver(validation) });
 
-  const signin = async (form: RegisterFormsInputs) => {
-    const formData = new FormData();
-    formData.append("email", form.email);
-    formData.append("username", form.username);
-    formData.append("name", form.name);
-    formData.append("surname", form.surname);
-    formData.append("password", form.password);
-    formData.append("role", form.role);
-    formData.append("institution", form.institution);
-    formData.append("profile_image", form.profile_image[0]);
+  useEffect(() => {
+    if (username) {
+      axios.get(`http://localhost:8080/profile/${username}`)
+        .then(response => {
+          const { email, name, surname, username, role, institution } = response.data.success;
+          setInitialData({ email, name, surname, username, role, institution, profile_image: null });
+          setValue("email", email);
+          setValue("name", name);
+          setValue("surname", surname);
+          setValue("username", username);
+          setValue("role", role);
+          setValue("institution", institution);
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+        });
+    }
+  }, [username, setValue]);
+
+  const updateProfile = async (form: EditProfileInputs) => {
+    const data = {
+      email: form.email,
+      username: form.username,
+      name: form.name,
+      surname: form.surname,
+      role: form.role,
+      institution: form.institution,
+    };
 
     try {
-      const response = await axios.post("http://localhost:8080/signup", formData, {
+      const response = await axios.put(`http://localhost:8080/profile/${username}`, data, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       });
-      console.log("SignIn successful:", response.data);
+      console.log("Profile update successful:", response.data);
       router.push('/profile/' + form.username);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleLogin = (form: RegisterFormsInputs) => {
-    signin(form);
+  const handleUpdate = (data: EditProfileInputs) => {
+    updateProfile(data);
   };
 
   return (
@@ -74,8 +103,8 @@ export default function RegisterPage() {
       <Header />
       <div className={styles.container}>
         <div className={styles.formContainer}>
-          <h1 className={styles.title}>Sign up for an account</h1>
-          <form onSubmit={handleSubmit(handleLogin)}>
+          <h1 className={styles.title}>Edit Profile</h1>
+          <form onSubmit={handleSubmit(handleUpdate)}>
             <div className={styles.inputGroup}>
               <label htmlFor="username" className={styles.label}>Username</label>
               <input
@@ -84,6 +113,7 @@ export default function RegisterPage() {
                 className={styles.input}
                 placeholder="Username"
                 {...register("username")}
+                disabled
               />
               {errors.username && <p className={styles.error}>{errors.username.message}</p>}
             </div>
@@ -121,28 +151,6 @@ export default function RegisterPage() {
               {errors.email && <p className={styles.error}>{errors.email.message}</p>}
             </div>
             <div className={styles.inputGroup}>
-              <label htmlFor="password" className={styles.label}>Password</label>
-              <input
-                type="password"
-                id="password"
-                placeholder="••••••••"
-                className={styles.input}
-                {...register("password")}
-              />
-              {errors.password && <p className={styles.error}>{errors.password.message}</p>}
-            </div>
-            <div className={styles.inputGroup}>
-              <label htmlFor="institution" className={styles.label}>Institution</label>
-              <input
-                type="text"
-                id="institution"
-                className={styles.input}
-                placeholder="Institution"
-                {...register("institution")}
-              />
-              {errors.institution && <p className={styles.error}>{errors.institution.message}</p>}
-            </div>
-            <div className={styles.inputGroup}>
               <label htmlFor="role" className={styles.label}>Role</label>
               <select
                 id="role"
@@ -156,6 +164,17 @@ export default function RegisterPage() {
               {errors.role && <p className={styles.error}>{errors.role.message}</p>}
             </div>
             <div className={styles.inputGroup}>
+              <label htmlFor="institution" className={styles.label}>Institution</label>
+              <input
+                type="text"
+                id="institution"
+                className={styles.input}
+                placeholder="Institution"
+                {...register("institution")}
+              />
+              {errors.institution && <p className={styles.error}>{errors.institution.message}</p>}
+            </div>
+            <div className={styles.inputGroup}>
               <label htmlFor="profile_image" className={styles.label}>Profile Image</label>
               <input
                 type="file"
@@ -165,12 +184,7 @@ export default function RegisterPage() {
               />
               {errors.profile_image && <p className={styles.error}>{errors.profile_image.message}</p>}
             </div>
-            <button type="submit" className={styles.button}>Sign up</button>
-            <p className={styles.link}>
-              <a href="/log-in" className={styles.link}>
-                Already have an account?
-              </a>
-            </p>
+            <button type="submit" className={styles.button}>Save Changes</button>
           </form>
         </div>
       </div>
